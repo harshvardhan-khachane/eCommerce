@@ -3,14 +3,15 @@ import pkg from 'pg';
 const { Pool } = pkg;
 import dotenv from 'dotenv';
 import productRoutes from './routes/productRoutes.js';
+import categoryRoutes from './routes/categoryRoutes.js';
+import inventoryRoutes from './routes/inventoryRoutes.js';
+import productImageRoutes from './routes/productImageRoutes.js';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 const port = process.env.PORT || 3000;
-
-
 
 const pool = new Pool({
   user: process.env.DB_USER,
@@ -33,6 +34,10 @@ async function testConnection() {
 testConnection();
 
 app.use("/api/v1", productRoutes);
+app.use("/api/v1", categoryRoutes);
+app.use("/api/v1", inventoryRoutes);
+app.use("/api/v1", productImageRoutes);
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
